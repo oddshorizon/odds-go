@@ -1,4 +1,4 @@
-module odds.com/odds-go
+module oddshorizon/odds-go
 
 go 1.18
 
