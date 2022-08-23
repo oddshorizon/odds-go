@@ -2,8 +2,8 @@ package comm
 
 import (
 	"context"
+	"github.com/oddshorizon/odds-go/util"
 	"google.golang.org/grpc/metadata"
-	"oddshorizon/odds-go/util"
 )
 
 const (

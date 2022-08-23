@@ -1,4 +1,4 @@
-module oddshorizon/odds-go
+module github.com/oddshorizon/odds-go
 
 go 1.18
 
