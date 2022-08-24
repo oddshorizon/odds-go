@@ -4,7 +4,7 @@ import (
 	"time"
 )
 
-//@brief：耗时统计函数
+// 耗时统计
 func CostTime() func() int64 {
 	start := time.Now()
 	return func() int64 {
