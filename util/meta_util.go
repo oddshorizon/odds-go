@@ -1,6 +1,10 @@
 package util
 
-import "google.golang.org/grpc/metadata"
+import (
+	"context"
+	"google.golang.org/grpc/metadata"
+	"google.golang.org/grpc/peer"
+)
 
 //
 //  GetValFromMd
@@ -15,4 +19,20 @@ func GetValFromMd(md metadata.MD, key string) string {
 		return ""
 	}
 	return arr[0]
+}
+
+//
+//  getClientAddr
+//  @Description: 获取客户端地址
+//  @receiver s
+//  @param ctx
+//  @return string
+//
+func GetClientAddr(ctx context.Context) string {
+	p, ok := peer.FromContext(ctx)
+	var clientAddr string
+	if ok {
+		clientAddr = p.Addr.String()
+	}
+	return clientAddr
 }
