@@ -3,7 +3,7 @@ module github.com/oddshorizon/odds-go
 go 1.18
 
 require (
-	github.com/apache/rocketmq-client-go/v2 v2.1.1
+	github.com/apache/rocketmq-client-go/v2 v2.1.0
 	github.com/go-redis/redis/v8 v8.11.5
 	github.com/juqiukai/glog v0.0.0-20220526064105-118dcf79940c
 	github.com/nacos-group/nacos-sdk-go v1.1.2
@@ -13,7 +13,7 @@ require (
 	gorm.io/gorm v1.23.8
 )
 
-replace github.com/apache/rocketmq-client-go/v2 v2.1.0 => github.com/oddshorizon/rocketmq-client-go/v2 v2.1.1
+replace github.com/apache/rocketmq-client-go/v2 v2.1.0 => github.com/oddshorizon/rocketmq-client-go/v2 v2.1.2
 
 require (
 	github.com/aliyun/alibaba-cloud-sdk-go v1.61.18 // indirect
