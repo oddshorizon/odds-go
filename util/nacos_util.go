@@ -206,11 +206,19 @@ func (u *NacosUtil) GetRedisAddr() string {
 //  @Description: 获取微服务内网域名
 //  @receiver u
 //  @param serviceName
+//  @param originalDomain
 //  @return string
 //
-func (u *NacosUtil) GetServiceDomain(serviceName string) string {
-	if !strings.HasSuffix(serviceName, ".domain") {
-		serviceName = fmt.Sprintf("%s.domain", serviceName)
+func (u *NacosUtil) GetServiceDomain(serviceName, originalDomain string) string {
+	retDomain := originalDomain
+	if "" != serviceName {
+		if !strings.HasSuffix(serviceName, ".domain") {
+			serviceName = fmt.Sprintf("%s.domain", serviceName)
+		}
+		domain, ok := u.configMap[serviceName]
+		if ok {
+			retDomain = domain
+		}
 	}
-	return u.configMap[serviceName]
+	return retDomain
 }
