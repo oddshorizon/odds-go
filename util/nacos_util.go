@@ -75,6 +75,7 @@ func (u *NacosUtil) LaunchNacosClients(namespaceId, app string, serverAddrs stri
 		"clientConfig":  clientConfig,
 	})
 	if nil != err {
+		glog.Errorf("create nacos naming client fail - namespaceId=%s, app=%s, nacosServerAddrs=%s, err=%v", namespaceId, app, serverAddrs, err)
 		return err
 	}
 
@@ -84,6 +85,7 @@ func (u *NacosUtil) LaunchNacosClients(namespaceId, app string, serverAddrs stri
 		"clientConfig":  clientConfig,
 	})
 	if nil != err {
+		glog.Errorf("create nacos config client fail - namespaceId=%s, app=%s, nacosServerAddrs=%s, err=%v", namespaceId, app, serverAddrs, err)
 		return err
 	}
 
@@ -134,12 +136,21 @@ func (u *NacosUtil) GetStringValue(key string) string {
 	return u.configMap[key]
 }
 
-func (u *NacosUtil) DeRegister(port uint64) (bool, error) {
+//
+//  DeRegister
+//  @Description: 取消注册
+//  @receiver u
+//  @param port
+//  @param serviceName
+//  @return bool
+//  @return error
+//
+func (u *NacosUtil) DeRegister(port uint64, serviceName string) (bool, error) {
 	ip, _ := GetLocalIp()
 	return u.namingClient.DeregisterInstance(vo.DeregisterInstanceParam{
 		Ip:          ip,
 		Port:        port,
-		ServiceName: "a.b.c",
+		ServiceName: serviceName,
 	})
 }
 
@@ -188,4 +199,18 @@ func (u *NacosUtil) GetMQAddr() string {
 //
 func (u *NacosUtil) GetRedisAddr() string {
 	return u.configMap[CONF_KEY_REDIS_ADDR]
+}
+
+//
+//  GetServiceDomain
+//  @Description: 获取微服务内网域名
+//  @receiver u
+//  @param serviceName
+//  @return string
+//
+func (u *NacosUtil) GetServiceDomain(serviceName string) string {
+	if !strings.HasSuffix(serviceName, ".domain") {
+		serviceName = fmt.Sprintf("%s.domain", serviceName)
+	}
+	return u.configMap[serviceName]
 }
