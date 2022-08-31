@@ -13,6 +13,8 @@ require (
 	gorm.io/gorm v1.23.8
 )
 
+replace github.com/apache/rocketmq-client-go/v2 v2.1.0 => github.com/oddshorizon/rocketmq-client-go/v2 v2.1.1
+
 require (
 	github.com/aliyun/alibaba-cloud-sdk-go v1.61.18 // indirect
 	github.com/buger/jsonparser v1.1.1 // indirect

@@ -254,6 +254,6 @@ func (u *NacosUtil) GetServiceDomain(serviceName, originalDomain string) string 
 			retDomain = domain
 		}
 	}
-	glog.Infof("nacos conf service: %s -> domain: %s", serviceName, retDomain)
+	glog.Infof("nacos service addr conf > %s: %s", serviceName, retDomain)
 	return retDomain
 }
