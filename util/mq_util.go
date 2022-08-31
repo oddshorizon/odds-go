@@ -7,12 +7,14 @@ import (
 	"github.com/apache/rocketmq-client-go/v2/consumer"
 	"github.com/apache/rocketmq-client-go/v2/primitive"
 	"github.com/apache/rocketmq-client-go/v2/producer"
+	"github.com/juqiukai/glog"
 	"strings"
 )
 
 func NewMQProducer(mqAddr string) (rocketmq.Producer, error) {
 	if "" == mqAddr {
-		return nil, errors.New("conf - redis.addr='' ")
+		glog.Errorf("conf - mq.addr='' ")
+		return nil, errors.New("conf - mq.addr='' ")
 	}
 	addrArr := strings.Split(mqAddr, ",")
 	p, err := rocketmq.NewProducer(
@@ -24,6 +26,7 @@ func NewMQProducer(mqAddr string) (rocketmq.Producer, error) {
 
 func NewMQPushConsumer(mqAddr, groupName string) (rocketmq.PushConsumer, error) {
 	if "" == mqAddr {
+		glog.Errorf("conf - mq.addr='' ")
 		return nil, errors.New("conf - mq.addr='' ")
 	}
 	addrArr := strings.Split(mqAddr, ",")
@@ -36,7 +39,8 @@ func NewMQPushConsumer(mqAddr, groupName string) (rocketmq.PushConsumer, error) 
 
 func NewMQAdmin(mqAddr string) (admin.Admin, error) {
 	if "" == mqAddr {
-		return nil, errors.New("conf - redis.addr='' ")
+		glog.Errorf("conf - mq.addr='' ")
+		return nil, errors.New("conf - mq.addr='' ")
 	}
 	addrArr := strings.Split(mqAddr, ",")
 	p, err := admin.NewAdmin(

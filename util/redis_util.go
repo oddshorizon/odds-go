@@ -3,6 +3,7 @@ package util
 import (
 	"errors"
 	"github.com/go-redis/redis/v8"
+	"github.com/juqiukai/glog"
 )
 
 //
@@ -12,14 +13,13 @@ import (
 //  @return *redis.Client
 //  @return error
 //
-func NewRedisClient(confMap map[string]string) (*redis.Client, error) {
-	addr := confMap["redis.addr"]
-	if "" == addr {
-		return nil, errors.New("conf - redis.addr='' ")
+func NewRedisClient(redisAddr string) (*redis.Client, error) {
+	if redisAddr == "" {
+		glog.Errorf("conf - redis.addr='' ")
+		return nil, errors.New("redis.addr not allow blank")
 	}
-
 	return redis.NewClient(&redis.Options{
-		Addr:     addr,
+		Addr:     redisAddr,
 		Password: "",
 		DB:       0,
 	}), nil

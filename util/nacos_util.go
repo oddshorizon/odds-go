@@ -15,8 +15,8 @@ import (
 )
 
 const (
-	CONF_KEY_MQ_ADDR    = "mq.addr"
-	CONF_KEY_REDIS_ADDR = "redis.addr"
+	CONF_KEY_ROCKETMQ_ADDR = "rocketmq.addr"
+	CONF_KEY_REDIS_ADDR    = "redis.addr"
 )
 
 var nacosUtil = new(NacosUtil)
@@ -107,9 +107,11 @@ func (u *NacosUtil) LoadConfig(sysName string) (map[string]string, error) {
 		Group:  "DEFAULT_GROUP",
 	})
 	if nil != err {
+		glog.Errorf("load nacos config fail - dataId=%s", dataId)
 		return nil, err
 	}
 	if "" == content {
+		glog.Errorf("load nacos config content is blank - dataId=%s", dataId)
 		return nil, errors.New(fmt.Sprintf("not found content, dataId=%s", dataId))
 	}
 
@@ -124,16 +126,46 @@ func (u *NacosUtil) LoadConfig(sysName string) (map[string]string, error) {
 
 //
 //  GetStringValue
-//  @Description: 获取string值
+//  @Description: 获取string类型的值
 //  @receiver u
 //  @param key
+//  @param defaultValue
 //  @return string
 //
-func (u *NacosUtil) GetStringValue(key string) string {
-	if u.configMap == nil {
-		return ""
+func (u *NacosUtil) GetStringValue(key, defaultValue string) string {
+	retVal := defaultValue
+	if u.configMap != nil {
+		val, ok := u.configMap[key]
+		if ok {
+			retVal = val
+		}
 	}
-	return u.configMap[key]
+	glog.Infof("nacos string conf > %s: %s", key, retVal)
+	return retVal
+}
+
+//
+//  GetBoolValue
+//  @Description: 获取bool值
+//  @receiver u
+//  @param key
+//  @param defaultValue
+//  @return bool
+//
+func (u *NacosUtil) GetBoolValue(key string, defaultValue bool) bool {
+	retVal := defaultValue
+	if u.configMap != nil {
+		val, ok := u.configMap[key]
+		if ok {
+			if "true" == val {
+				retVal = true
+			} else if "false" == val {
+				retVal = false
+			}
+		}
+	}
+	glog.Infof("nacos bool conf > %s: %s", key, retVal)
+	return defaultValue
 }
 
 //
@@ -182,23 +214,25 @@ func (u *NacosUtil) Register(port uint64, serviceName string) (bool, error) {
 }
 
 //
-//  getMQAddr
-//  @Description: 获取mq地址
+//  GetMQAddr
+//  @Description: 获取rocketmq地址
 //  @receiver u
+//  @param defaultMQAddr
 //  @return string
 //
-func (u *NacosUtil) GetMQAddr() string {
-	return u.configMap[CONF_KEY_MQ_ADDR]
+func (u *NacosUtil) GetRocketMQAddr(defaultMQAddr string) string {
+	return u.GetStringValue(CONF_KEY_ROCKETMQ_ADDR, defaultMQAddr)
 }
 
 //
-//  getRedisAddr
-//  @Description: 获取redis地址
+//  GetRedisAddr
+//  @Description: 获取
 //  @receiver u
+//  @param defaultRedisAddr
 //  @return string
 //
-func (u *NacosUtil) GetRedisAddr() string {
-	return u.configMap[CONF_KEY_REDIS_ADDR]
+func (u *NacosUtil) GetRedisAddr(defaultRedisAddr string) string {
+	return u.GetStringValue(CONF_KEY_REDIS_ADDR, defaultRedisAddr)
 }
 
 //
@@ -220,5 +254,6 @@ func (u *NacosUtil) GetServiceDomain(serviceName, originalDomain string) string 
 			retDomain = domain
 		}
 	}
+	glog.Infof("nacos conf service: %s -> domain: %s", serviceName, retDomain)
 	return retDomain
 }
