@@ -246,8 +246,8 @@ func (u *NacosUtil) GetRedisAddr(defaultRedisAddr string) string {
 func (u *NacosUtil) GetServiceDomain(serviceName, originalDomain string) string {
 	retDomain := originalDomain
 	if "" != serviceName {
-		if !strings.HasSuffix(serviceName, ".domain") {
-			serviceName = fmt.Sprintf("%s.domain", serviceName)
+		if !strings.HasSuffix(serviceName, ".addr") {
+			serviceName = fmt.Sprintf("%s.addr", serviceName)
 		}
 		domain, ok := u.configMap[serviceName]
 		if ok {
