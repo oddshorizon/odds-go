@@ -164,7 +164,7 @@ func (u *NacosUtil) GetBoolValue(key string, defaultValue bool) bool {
 			}
 		}
 	}
-	glog.Infof("nacos bool conf > %s: %s", key, retVal)
+	glog.Infof("nacos bool conf > %s: %t", key, retVal)
 	return defaultValue
 }
 
