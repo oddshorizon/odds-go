@@ -121,6 +121,7 @@ func (u *NacosUtil) LoadConfig(sysName string) (map[string]string, error) {
 		return nil, err
 	}
 	u.configMap = confMap
+	glog.Infof("load nacos conf success - \n %s.yaml \n %v", sysName, confMap)
 	return confMap, nil
 }
 
@@ -140,7 +141,22 @@ func (u *NacosUtil) GetStringValue(key, defaultValue string) string {
 			retVal = val
 		}
 	}
-	glog.Infof("nacos string conf > %s: %s", key, retVal)
+	glog.Debugf("nacos string conf > %s: %s", key, retVal)
+	return retVal
+}
+
+func (u *NacosUtil) GetInt64Value(key string, defaultValue int64) int64 {
+	retVal := defaultValue
+	if u.configMap != nil {
+		val, ok := u.configMap[key]
+		if ok {
+			int64Val, err := strconv.ParseInt(val, 10, 64)
+			if nil == err {
+				retVal = int64Val
+			}
+		}
+	}
+	glog.Debugf("nacos string conf > %s: %s", key, retVal)
 	return retVal
 }
 
@@ -164,7 +180,7 @@ func (u *NacosUtil) GetBoolValue(key string, defaultValue bool) bool {
 			}
 		}
 	}
-	glog.Infof("nacos bool conf > %s: %t", key, retVal)
+	glog.Debugf("nacos bool conf > %s: %t", key, retVal)
 	return retVal
 }
 
@@ -254,6 +270,6 @@ func (u *NacosUtil) GetServiceAddr(serviceName, originalAddr string) string {
 			retAddr = addr
 		}
 	}
-	glog.Infof("nacos service addr conf > %s: %s", serviceName, retAddr)
+	glog.Debugf("nacos service addr conf > %s: %s", serviceName, retAddr)
 	return retAddr
 }
