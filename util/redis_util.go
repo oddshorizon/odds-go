@@ -19,9 +19,6 @@ func NewRedisClient(redisAddr string, poolSize int) (*redis.Client, error) {
 		glog.Errorf("conf - redis.addr='' ")
 		return nil, errors.New("redis.addr not allow blank")
 	}
-	if poolSize <= 0 {
-		poolSize = 1000
-	}
 	return redis.NewClient(&redis.Options{
 		Addr:     redisAddr,
 		Password: "",
@@ -44,10 +41,6 @@ func NewRedisClusterClient(redisAddrs, password string, poolSize int) (*redis.Cl
 		glog.Errorf("conf - redis.addrs is blank ")
 		return nil, errors.New("redis.addr not allow blank")
 	}
-	if poolSize <= 0 {
-		poolSize = 1000
-	}
-
 	rdb := redis.NewClusterClient(&redis.ClusterOptions{
 		Addrs:    strings.Split(redisAddrs, ","),
 		Password: password,
