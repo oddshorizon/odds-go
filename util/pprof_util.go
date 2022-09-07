@@ -14,7 +14,7 @@ func LaunchPprof(pprofEnabled bool, dir string) error {
 		return nil
 	}
 	// start cpu profile
-	cpuProfileFilePath := fmt.Sprintf("%s/cpu.profile", dir)
+	cpuProfileFilePath := fmt.Sprintf("%s/cpu.pprof", dir)
 	os.Remove(cpuProfileFilePath)
 	cpuProfileFile, err := os.Create(cpuProfileFilePath)
 	if err != nil {
@@ -24,7 +24,7 @@ func LaunchPprof(pprofEnabled bool, dir string) error {
 		return err
 	}
 	// start mem profile
-	memProfileFilePath := fmt.Sprintf("%s/mem.profile", dir)
+	memProfileFilePath := fmt.Sprintf("%s/mem.pprof", dir)
 	os.Remove(memProfileFilePath)
 	memProfileFile, err := os.Create(memProfileFilePath)
 	if err != nil {
