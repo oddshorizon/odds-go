@@ -9,8 +9,8 @@ import (
 )
 
 var mainPprofEnabled bool
-var cpuProfileFile os.File
-var memProfileFile os.File
+var cpuProfileFile *os.File
+var memProfileFile *os.File
 
 func LaunchPprof(pprofEnabled bool, dir string) error {
 	mainPprofEnabled = pprofEnabled
@@ -21,23 +21,22 @@ func LaunchPprof(pprofEnabled bool, dir string) error {
 	// start cpu profile
 	cpuProfileFilePath := fmt.Sprintf("%s/cpu.pprof", dir)
 	os.Remove(cpuProfileFilePath)
-	cpuProfileFile, err := os.Create(cpuProfileFilePath)
+	f1, err := os.Create(cpuProfileFilePath)
 	if err != nil {
 		return err
 	}
+	cpuProfileFile = f1
 	if err := pprof.StartCPUProfile(cpuProfileFile); err != nil {
 		return err
 	}
 	// start mem profile
 	memProfileFilePath := fmt.Sprintf("%s/mem.pprof", dir)
 	os.Remove(memProfileFilePath)
-	memProfileFile, err := os.Create(memProfileFilePath)
+	f2, err := os.Create(memProfileFilePath)
 	if err != nil {
 		return err
 	}
-	if err := pprof.WriteHeapProfile(memProfileFile); err != nil {
-		return err
-	}
+	memProfileFile = f2
 	return nil
 }
 
@@ -51,7 +50,8 @@ func StopPprof(waitSeconds int) {
 			pprof.StopCPUProfile()
 			cpuProfileFile.Close()
 		}
-		if nil != &memProfileFile {
+		if nil != memProfileFile {
+			pprof.WriteHeapProfile(memProfileFile)
 			memProfileFile.Close()
 		}
 		glog.Infof("stop pprof success - waitSeconds=%d", waitSeconds)
