@@ -3,7 +3,7 @@ package util
 import (
 	"errors"
 	"github.com/go-redis/redis/v9"
-	"github.com/juqiukai/glog"
+	"github.com/oddshorizon/glog"
 	"strings"
 )
 

@@ -5,8 +5,8 @@ go 1.18
 require (
 	github.com/apache/rocketmq-client-go/v2 v2.1.0
 	github.com/go-redis/redis/v9 v9.0.0-beta.2
-	github.com/juqiukai/glog v0.0.0-20220526064105-118dcf79940c
 	github.com/nacos-group/nacos-sdk-go v1.1.2
+	github.com/oddshorizon/glog v1.0.1
 	google.golang.org/grpc v1.48.0
 	gopkg.in/yaml.v2 v2.4.0
 	gorm.io/driver/mysql v1.3.6
@@ -22,7 +22,6 @@ require (
 	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
 	github.com/emirpasic/gods v1.12.0 // indirect
 	github.com/go-errors/errors v1.0.1 // indirect
-	github.com/go-redis/redis/v9 v9.0.0-beta.2 // indirect
 	github.com/go-sql-driver/mysql v1.6.0 // indirect
 	github.com/golang/mock v1.3.1 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect

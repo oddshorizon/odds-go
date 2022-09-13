@@ -2,7 +2,7 @@ package util
 
 import (
 	"fmt"
-	"github.com/juqiukai/glog"
+	"github.com/oddshorizon/glog"
 	"os"
 	"runtime/pprof"
 	"time"
