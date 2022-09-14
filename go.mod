@@ -6,7 +6,7 @@ require (
 	github.com/apache/rocketmq-client-go/v2 v2.1.0
 	github.com/go-redis/redis/v9 v9.0.0-beta.2
 	github.com/nacos-group/nacos-sdk-go v1.1.2
-	github.com/oddshorizon/glog v1.0.1
+	github.com/oddshorizon/glog v1.0.3
 	google.golang.org/grpc v1.48.0
 	gopkg.in/yaml.v2 v2.4.0
 	gorm.io/driver/mysql v1.3.6
