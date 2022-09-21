@@ -25,6 +25,7 @@ type NacosUtil struct {
 	namingClient naming_client.INamingClient
 	configClient config_client.IConfigClient
 	configMap    map[string]string
+	configId     string
 }
 
 func GetNacosUtil() *NacosUtil {
@@ -122,11 +123,18 @@ func (u *NacosUtil) LoadConfig(sysName string) (map[string]string, error) {
 		return nil, err
 	}
 	u.configMap = confMap
-	glog.Infof("load nacos conf success - \n %s.yaml ", sysName)
-	for k, v := range confMap {
-		glog.Infof("%s: %s", k, v)
-	}
+	u.configId = dataId
+	u.PrintConfigInfo()
 	return confMap, nil
+}
+
+func (u *NacosUtil) PrintConfigInfo() {
+	glog.Infof("load nacos conf success - \n %s ", u.configId)
+	if nil != u.configMap {
+		for k, v := range u.configMap {
+			glog.Infof("%s: %s", k, v)
+		}
+	}
 }
 
 //
