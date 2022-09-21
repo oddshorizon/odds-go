@@ -129,7 +129,7 @@ func (u *NacosUtil) LoadConfig(sysName string) (map[string]string, error) {
 }
 
 func (u *NacosUtil) PrintConfigInfo() {
-	glog.Infof("load nacos conf success - \n %s ", u.configId)
+	glog.Infof("load nacos conf success - %s ", u.configId)
 	if nil != u.configMap {
 		for k, v := range u.configMap {
 			glog.Infof("%s: %s", k, v)
