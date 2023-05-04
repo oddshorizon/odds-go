@@ -19,6 +19,11 @@ type RequestHeader struct {
 	SelfMap  map[string]string // 自定义的header信息
 }
 
+//
+// NewRequestHeader
+//  @Description: 创建一个新的请求头
+//  @return *RequestHeader
+//
 func NewRequestHeader() *RequestHeader {
 	header := new(RequestHeader)
 	header.SelfMap = make(map[string]string)
